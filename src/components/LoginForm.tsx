@@ -31,7 +31,7 @@ export const LoginForm = () => {
       title: "Login Successful!",
       description: "Welcome back to CareerConnect",
     });
-    navigate("/dashboard");
+    navigate("/");
   };
 
   return (

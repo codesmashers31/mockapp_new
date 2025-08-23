@@ -94,7 +94,7 @@ export const RegisterForm = () => {
             <div className="flex justify-end mb-4">
               <p className="text-sm text-muted-foreground">
                 Already Registered?{" "}
-                <Link to="/login" className="text-primary hover:text-primary-hover font-medium">
+                <Link to="/signin" className="text-primary hover:text-primary-hover font-medium">
                   Login here
                 </Link>
               </p>
