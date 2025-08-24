@@ -26,7 +26,10 @@ const Sidebar = () => {
         </CardHeader>
         <CardContent className="space-y-2">
           {filters.map((filter, index) => (
-            <div key={index} className="flex items-center justify-between p-2 hover:bg-muted rounded cursor-pointer smooth-transition">
+            <div
+              key={index}
+              className="flex items-center justify-between p-2 hover:bg-muted rounded cursor-pointer transition"
+            >
               <span className="text-sm">{filter.name}</span>
               <Badge variant="secondary">{filter.count}</Badge>
             </div>

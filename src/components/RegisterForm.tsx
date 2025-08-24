@@ -6,7 +6,8 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Eye, EyeOff } from "lucide-react";
-import registrationIllustration from "../../public/media/illustrations/28.svg";
+import registrationIllustration from "/media/illustrations/28.svg";
+// import MySvg from "/src/media/illustrations/28.svg";
 
 export const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState(false);
