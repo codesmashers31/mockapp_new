@@ -1,76 +1,62 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 
-const InfoPanel = () => {
-  const stats = [
-    { label: "Active HRs", value: "150+" },
-    { label: "Mentors", value: "200+" },
-    { label: "Sessions Today", value: "45" },
-    { label: "Success Rate", value: "95%" }
-  ];
+const mockStatus = [
+  "Actively booking mocks",
+  "Preparing for mock sessions",
+  "Scheduled for a mock",
+  "Received mock feedback",
+  "Just exploring mock interviews",
+  "Not interested in mocks"
+];
 
-  const upcomingSessions = [
-    { time: "2:00 PM", mentor: "John D.", type: "Technical" },
-    { time: "3:30 PM", mentor: "Sarah M.", type: "HR Round" },
-    { time: "5:00 PM", mentor: "Mike L.", type: "Full Stack" }
-  ];
+const InfoPanel = () => (
+  <div className="space-y-5">
+    {/* Needs Attention / Mock Journey */}
+    <Card className="rounded-2xl">
+      <CardHeader className="pb-1">
+        <span className="text-xs font-bold uppercase tracking-wide text-purple-500">
+          Needs attention
+        </span>
+        <CardTitle className="text-base mt-0.5 mb-1">
+          Where are you in your mock interview journey?
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-2">
+        {mockStatus.map((status, i) => (
+          <button
+            key={i}
+            className="w-full py-2 text-sm font-semibold border border-gray-200 hover:border-primary rounded-full bg-white hover:bg-primary/10 text-gray-700 transition mb-0.5"
+          >
+            {status}
+          </button>
+        ))}
+      </CardContent>
+    </Card>
 
-  return (
-    <div className="space-y-6">
-      {/* Platform Stats */}
-      <Card>
-        <CardHeader className="pb-3">
-          <CardTitle className="text-lg">Platform Stats</CardTitle>
-        </CardHeader>
-        <CardContent className="grid grid-cols-2 gap-4">
-          {stats.map((stat, index) => (
-            <div key={index} className="text-center p-3 bg-muted rounded-lg">
-              <div className="text-2xl font-bold text-primary">{stat.value}</div>
-              <div className="text-sm text-muted-foreground">{stat.label}</div>
-            </div>
-          ))}
-        </CardContent>
-      </Card>
+    {/* Tips & Guidance */}
+    <Card className="rounded-2xl">
+      <CardContent className="flex flex-col items-center p-6">
+        <img src="/media/icons/shield.png" alt="Safety" className="h-10 mb-2" />
+        <div className="font-bold text-sm text-gray-800 mb-1 text-center">Always practice safe sharing</div>
+        <div className="text-xs text-muted-foreground text-center mb-2">
+          Never disclose private info in a mock. Real feedback, real growth—safe experience every session.
+        </div>
+        <a href="#" className="text-blue-600 text-sm font-medium hover:underline">Learn more</a>
+      </CardContent>
+    </Card>
 
-      {/* Upcoming Sessions */}
-      <Card>
-        <CardHeader className="pb-3">
-          <CardTitle className="text-lg">Upcoming Sessions</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3">
-          {upcomingSessions.map((session, index) => (
-            <div key={index} className="flex items-center justify-between p-3 border border-border rounded-lg">
-              <div>
-                <div className="font-medium text-sm">{session.time}</div>
-                <div className="text-xs text-muted-foreground">{session.mentor}</div>
-              </div>
-              <div className="text-xs bg-accent/10 text-accent px-2 py-1 rounded">
-                {session.type}
-              </div>
-            </div>
-          ))}
-        </CardContent>
-      </Card>
-
-      {/* Help & Support */}
-      <Card>
-        <CardHeader className="pb-3">
-          <CardTitle className="text-lg">Need Help?</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3">
-          <Button variant="outline" className="w-full justify-start text-sm">
-            📞 Contact Support
-          </Button>
-          <Button variant="outline" className="w-full justify-start text-sm">
-            📚 View Guides
-          </Button>
-          <Button variant="outline" className="w-full justify-start text-sm">
-            💬 Live Chat
-          </Button>
-        </CardContent>
-      </Card>
-    </div>
-  );
-};
+    {/* Pro-tip / Guide */}
+    <Card className="rounded-2xl">
+      <CardContent className="flex flex-col items-center p-4">
+        <img src="/media/icons/gudance.png" alt="Guide" className="h-12 mb-2 rounded" />
+        <div className="font-bold text-sm text-gray-800 mb-1 text-center">How to Get the Most from a Mock Session</div>
+        <div className="text-xs text-muted-foreground text-center mb-2">
+          Structure your questions, request detailed feedback, and reflect on each session for best results.
+        </div>
+        <a href="#" className="text-blue-600 text-sm font-medium hover:underline">Know more</a>
+      </CardContent>
+    </Card>
+  </div>
+);
 
 export default InfoPanel;

@@ -1,5 +1,15 @@
+import React, { useRef } from "react";
 import { Briefcase, MapPin, Clock } from "lucide-react";
 
+// ---- Helper for section backgrounds ----
+function getSectionBg(section) {
+  if (section === "IT") return "bg-gradient-to-r from-blue-50 via-cyan-50 to-blue-100";
+  if (section === "HR") return "bg-gradient-to-r from-pink-50 via-purple-50 to-pink-100";
+  if (section === "Business") return "bg-gradient-to-r from-yellow-50 via-orange-50 to-yellow-100";
+  return "bg-gray-50";
+}
+
+// ---- DATA ----
 const profiles = [
   {
     name: "Sarah Johnson",
@@ -9,8 +19,9 @@ const profiles = [
     rating: 4.8,
     price: "₹299/session",
     type: "hr",
+    category: "HR",
     company: "Mock-in",
-    logo: "/logo-company.png", // replace with your actual logo path
+    logo: "media/avatars/300-16.png",
     postedAgo: "3 days ago",
     location: "Remote",
     officeLocation: "Bengaluru",
@@ -26,8 +37,9 @@ const profiles = [
     rating: 4.9,
     price: "₹399/session",
     type: "mentor",
+    category: "IT",
     company: "Mock-in",
-    logo: "/logo-company.png",
+    logo: "media/avatars/300-18.png",
     postedAgo: "5 days ago",
     location: "Remote",
     officeLocation: "Hyderabad",
@@ -43,111 +55,186 @@ const profiles = [
     rating: 4.7,
     price: "₹249/session",
     type: "hr",
+    category: "HR",
     company: "Mock-in",
-    logo: "/logo-company.png",
+    logo: "media/avatars/300-17.png",
     postedAgo: "2 days ago",
     location: "Remote",
     officeLocation: "Pune",
     openings: 12,
     applicants: 70,
     reviews: 220
+  },
+  {
+    name: "Vikram Singh",
+    role: "Business Consultant",
+    experience: "9+ years",
+    skills: ["Strategy", "Business Analysis", "Operation Management"],
+    rating: 4.6,
+    price: "₹399/session",
+    type: "business",
+    category: "Business",
+    company: "Mock-in",
+    logo: "media/avatars/300-20.png",
+    postedAgo: "4 days ago",
+    location: "Remote",
+    officeLocation: "Mumbai",
+    openings: 4,
+    applicants: 21,
+    reviews: 120
+  },
+  {
+    name: "Alok Mehta",
+    role: "Cloud Engineer",
+    experience: "7+ years",
+    skills: ["AWS", "Azure", "GCP", "DevOps"],
+    rating: 4.8,
+    price: "₹449/session",
+    type: "mentor",
+    category: "IT",
+    company: "Mock-in",
+    logo: "media/avatars/300-21.png",
+    postedAgo: "1 day ago",
+    location: "Remote",
+    officeLocation: "Delhi",
+    openings: 10,
+    applicants: 55,
+    reviews: 190
+  },
+  {
+    name: "Simran Dhawan",
+    role: "Business Analyst",
+    experience: "5+ years",
+    skills: ["Finance", "Reporting", "Excel", "Extremely Long Skill For Clamp"],
+    rating: 4.5,
+    price: "₹299/session",
+    type: "business",
+    category: "Business",
+    company: "Mock-in",
+    logo: "media/avatars/300-22.png",
+    postedAgo: "6 days ago",
+    location: "Remote",
+    officeLocation: "Chennai",
+    openings: 6,
+    applicants: 32,
+    reviews: 95
   }
 ];
 
-const CoachSessionCard = () => (
-  <section className="w-full">
-    {/* Quick Stats */}
-    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-6">
-      <div className="bg-white p-4 rounded-lg border border-gray-200 text-center shadow-sm transition hover:shadow-md">
-        <div className="text-xl md:text-2xl font-bold text-blue-600">150+</div>
-        <div className="text-xs text-gray-600 font-medium">Active HRs</div>
-      </div>
-      <div className="bg-white p-4 rounded-lg border border-gray-200 text-center shadow-sm transition hover:shadow-md">
-        <div className="text-xl md:text-2xl font-bold text-green-600">200+</div>
-        <div className="text-xs text-gray-600 font-medium">Mentors</div>
-      </div>
-      <div className="bg-white p-4 rounded-lg border border-gray-200 text-center shadow-sm transition hover:shadow-md col-span-2 sm:col-span-1">
-        <div className="text-xl md:text-2xl font-bold text-purple-600">95%</div>
-        <div className="text-xs text-gray-600 font-medium">Success Rate</div>
-      </div>
-    </div>
+// ---- CarouselSlider: horizontal scroll arrows ----
+const CarouselSlider = ({ title, cards }) => {
+  const scrollRef = useRef(null);
+  const scrollBy = (offset) => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ left: offset, behavior: "smooth" });
+    }
+  };
 
-    {/* Divider */}
-    <div className="flex items-center space-x-4 mb-5">
-      <div className="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent flex-1" />
-      <span className="text-xs md:text-sm font-bold text-gray-600 bg-gray-50 px-3">
-        Available Coaches
-      </span>
-      <div className="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent flex-1" />
-    </div>
-
-    {/* Profile/Session Cards  */}
-    <div className="space-y-6">
-      {profiles.map((profile, idx) => (
-        <div
-          key={idx}
-          className="bg-white rounded-2xl border border-gray-200 shadow-md p-6 flex flex-col gap-2 transition hover:shadow-lg"
-        >
-          <div className="flex items-start justify-between gap-4">
-            {/* Left: Avatar + Main Info */}
-            <div className="flex-1 min-w-0 flex gap-4">
-              <img
-                src={profile.logo}
-                alt={profile.company}
-                className="w-14 h-14 rounded-full border bg-white object-cover mt-1"
-              />
-              <div className="flex flex-col gap-1 min-w-0">
-                <div className="flex items-center gap-2 flex-wrap">
-                  <span className="text-base font-bold text-foreground">{profile.name}</span>
-                  <span className="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full font-semibold">{profile.experience}</span>
-                  <span className="ml-1 text-yellow-500 text-xs flex items-center gap-1 font-medium" title="Rating">
-                    ★ {profile.rating}
-                  </span>
-                  <span className="ml-1 text-xs text-gray-500">({profile.reviews.toLocaleString()} reviews)</span>
-                </div>
-                <div className="text-sm text-gray-600 truncate">{profile.role}</div>
-                <div className="flex items-center gap-4 mt-1 text-gray-600 text-sm flex-wrap">
-                  <span className="flex items-center gap-1"><Briefcase className="w-4 h-4" />{profile.skills.join(", ")}</span>
-                  <span className="flex items-center gap-1"><MapPin className="w-4 h-4" />{profile.location}</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Right: Action/Price */}
-            <div className="flex flex-col items-end justify-between h-full">
-              <span className="font-semibold text-base md:text-lg text-blue-700">{profile.price}</span>
-              <button
-                className={`mt-2 px-5 py-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm shadow`}
-              >
-                {profile.type === "hr" ? "Book Session" : "Connect"}
-              </button>
-            </div>
+  return (
+    <>
+      <div className="flex items-center justify-between mb-3 px-1">
+        <h2 className="font-bold text-xl text-gray-800 tracking-tight">{title}</h2>
+        <div className="flex gap-2">
+          <button
+            onClick={() => scrollBy(-380)}
+            className="p-1.5 ml-2 rounded-full backdrop-blur bg-white/60 border border-blue-200 shadow text-blue-600 hover:scale-110 active:scale-90 transition"
+            aria-label="Scroll Left"
+          >
+            <svg className="w-5 h-5" viewBox="0 0 20 20"><path fill="none" stroke="currentColor" strokeWidth="2" d="M13 4l-6 6 6 6" /></svg>
+          </button>
+          <button
+            onClick={() => scrollBy(380)}
+            className="p-1.5 rounded-full backdrop-blur bg-white/60 border border-blue-200 shadow text-blue-600 hover:scale-110 active:scale-90 transition"
+            aria-label="Scroll Right"
+          >
+            <svg className="w-5 h-5" viewBox="0 0 20 20"><path fill="none" stroke="currentColor" strokeWidth="2" d="M7 4l6 6-6 6" /></svg>
+          </button>
+        </div>
+      </div>
+      <div
+        ref={scrollRef}
+        className="flex gap-6 overflow-x-auto pb-2 no-scrollbar"
+        style={{ scrollSnapType: "x mandatory" }}
+      >
+        {cards.map((c, idx) => (
+          <div
+            key={idx}
+            className="h-[230px] w-[340px] md:w-[370px] flex-shrink-0 scroll-snap-align-start"
+          >
+            {c}
           </div>
+        ))}
+      </div>
+      <style>{`
+        .no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+      `}</style>
+    </>
+  );
+};
 
-          {/* Desc/Location Row */}
-          <div className="flex flex-wrap items-center gap-4 text-gray-500 text-xs mt-2">
-            <span><MapPin className="inline w-4 h-4" /> Office: {profile.officeLocation}</span>
-            <span><Clock className="inline w-4 h-4" /> Posted: {profile.postedAgo}</span>
-            <span>Openings: <b className="text-gray-700">{profile.openings}</b></span>
-            <span>Applicants: <b className="text-gray-700">{profile.applicants}+</b></span>
+// ---- getCards: card content with clamp, fixed sizing ----
+function getCards(category) {
+  const filtered = profiles.filter((p) => p.category === category);
+  return filtered.map((profile, idx) => (
+    <div
+      key={idx}
+      className="rounded-xl border border-gray-200 bg-white shadow flex flex-col justify-between h-full w-full px-5 py-4 transition-all duration-200 hover:shadow-lg"
+    >
+      <div>
+        <div className="flex items-start gap-3 mb-2">
+          <img src={profile.logo} alt={profile.company} className="w-14 h-14 rounded-lg border bg-white object-cover shrink-0" />
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="font-semibold text-base text-gray-900 truncate max-w-[100px]">{profile.name}</span>
+              <span className="text-xs bg-blue-100 text-blue-800 px-2 rounded-full font-semibold">{profile.experience}</span>
+              <span className="text-yellow-500 text-xs flex items-center gap-1 font-medium ml-1">★ {profile.rating}</span>
+              <span className="ml-1 text-xs text-gray-400">{profile.reviews}</span>
+            </div>
+            <div className="text-xs text-gray-600 truncate">{profile.role}</div>
+            <div className="flex flex-wrap items-center gap-2 mt-0.5 text-gray-600 text-xs">
+              <span className="flex items-center gap-1 line-clamp-1"><Briefcase className="w-4 h-4" />{profile.skills.join(", ")}</span>
+              <span className="flex items-center gap-1"><MapPin className="w-4 h-4" />{profile.location}</span>
+            </div>
           </div>
         </div>
-      ))}
+      </div>
+      <div className="flex items-end justify-between gap-2 pt-1">
+        <div className="flex flex-col gap-1">
+          <span className="text-xs text-gray-500"><MapPin className="inline w-4 h-4" /> {profile.officeLocation}</span>
+          <span className="text-xs text-gray-500"><Clock className="inline w-4 h-4" /> {profile.postedAgo}</span>
+        </div>
+        <div className="flex flex-col items-end min-w-[70px]">
+          <span className="font-semibold text-[15px] text-blue-700">{profile.price}</span>
+          <button className="mt-1.5 px-4 py-1 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs shadow transition">
+            Book Mock
+          </button>
+        </div>
+      </div>
     </div>
+  ));
+}
 
-    {/* Ad Banner (Naukri style) */}
-    <div className="mt-8 bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-lg border border-blue-200">
-      <h3 className="font-semibold text-lg text-blue-800 mb-2">
-        75 Early access roles from top companies
-      </h3>
-      <p className="text-sm text-blue-700 mb-4">
-        See what recruiters are searching for, even before they post a job
-      </p>
-      <button className="text-blue-600 font-semibold text-sm">
-        View all
-      </button>
+// ---- HomePage ----
+export default function CarouselPage() {
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-[#f8fafc] via-[#f4f6fa] to-[#f8fafc] px-2 py-7">
+      <div className="flex items-center space-x-4 mb-8">
+        <div className="h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent flex-1" />
+        <span className="text-sm md:text-base font-bold text-blue-700 bg-blue-50 px-4 py-2 rounded-full shadow">
+          Mock Interview Coaches
+        </span>
+        <div className="h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent flex-1" />
+      </div>
+      <div className={`rounded-2xl mb-12 px-2 py-6 md:px-8 shadow-inner ${getSectionBg("IT")}`}>
+        <CarouselSlider title="IT Mock Sessions" cards={getCards("IT")} />
+      </div>
+      <div className={`rounded-2xl mb-12 px-2 py-6 md:px-8 shadow-inner ${getSectionBg("HR")}`}>
+        <CarouselSlider title="HR Mock Sessions" cards={getCards("HR")} />
+      </div>
+      <div className={`rounded-2xl mb-12 px-2 py-6 md:px-8 shadow-inner ${getSectionBg("Business")}`}>
+        <CarouselSlider title="Business People Mock Sessions" cards={getCards("Business")} />
+      </div>
     </div>
-  </section>
-);
-
-export default CoachSessionCard;
+  );
+}
