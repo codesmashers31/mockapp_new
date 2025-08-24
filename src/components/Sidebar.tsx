@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -8,21 +7,11 @@ import { Progress } from "@/components/ui/progress";
 const profile = {
   name: "Balamugunthan Shakthi",
   avatar: "/media/avatars/myimages.jpg",
-=======
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-
-const profile = {
-  name: "Balamugunthan Shakthi",
-  avatar: "/media/avatars/myimages.jpg", // Replace with real image path
->>>>>>> bd54fbf00f6e77ae3425ebdd9b239ba3345dc53a
   role: "US IT Recruiter",
   org: "Two95 International Staffing Se...",
   profilePercent: 72
 };
 
-<<<<<<< HEAD
 const mockCategories = [
   { id: "it", name: "IT", icon: "💻", color: "bg-blue-100 text-blue-800" },
   { id: "hr", name: "HR", icon: "👥", color: "bg-pink-100 text-pink-800" },
@@ -152,16 +141,12 @@ const Sidebar = () => {
     }
   };
 
-=======
-const Sidebar = () => {
->>>>>>> bd54fbf00f6e77ae3425ebdd9b239ba3345dc53a
   return (
     <aside className="w-full max-w-xs mx-auto mt-2">
       {/* Main Profile Card */}
       <div className="bg-white rounded-2xl border border-gray-200 shadow-lg px-6 pt-7 pb-6 mb-7 flex flex-col items-center">
         {/* Avatar with circular completion gauge */}
         <div className="relative mb-2">
-<<<<<<< HEAD
           <div className="relative w-20 h-20 flex items-center justify-center">
             <CircularProgress percentage={profileProgress} />
             <div className="absolute inset-0 flex items-center justify-center">
@@ -178,19 +163,6 @@ const Sidebar = () => {
             style={{ fontVariantNumeric: "tabular-nums" }}
           >
             {profileProgress}%
-=======
-          <div className="w-20 h-20 rounded-full border-4 border-blue-100 flex items-center justify-center overflow-hidden">
-            <img
-              src={profile.avatar}
-              alt={profile.name}
-              className="w-18 h-18 rounded-full object-cover"
-            />
-          </div>
-          <span className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-white text-blue-500 px-2 py-0.5 rounded-full text-xs font-medium shadow"
-            style={{ fontVariantNumeric: "tabular-nums" }}
-          >
-            {profile.profilePercent}%
->>>>>>> bd54fbf00f6e77ae3425ebdd9b239ba3345dc53a
           </span>
         </div>
         {/* Name and Info */}
@@ -202,19 +174,11 @@ const Sidebar = () => {
           </div>
           <div className="text-xs text-gray-500 mb-2">Last updated today</div>
         </div>
-<<<<<<< HEAD
         <Button className="w-full rounded-full font-semibold text-base bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 mb-3 transition-all shadow-md hover:shadow-lg">
           Complete profile
         </Button>
         {/* Profile Performance */}
         <div className="w-full bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl px-3 py-3 mb-2 border border-blue-100">
-=======
-        <Button className="w-full rounded-full font-semibold text-base bg-blue-600 hover:bg-blue-700 mb-3 transition">
-          Complete profile
-        </Button>
-        {/* Profile Performance */}
-        <div className="w-full bg-blue-50 rounded-xl px-3 py-3 mb-2">
->>>>>>> bd54fbf00f6e77ae3425ebdd9b239ba3345dc53a
           <div className="font-bold text-[15px] text-blue-900 flex items-center justify-between mb-2">
             Profile performance
             <span className="text-gray-400 text-base cursor-pointer" title="More info">ⓘ</span>
@@ -231,29 +195,15 @@ const Sidebar = () => {
             </div>
           </div>
           <div className="mt-2 w-full">
-<<<<<<< HEAD
             <div className="flex items-center gap-2 bg-white rounded-lg py-2 px-3 border border-blue-100 text-[13px] text-blue-700 font-medium cursor-pointer hover:bg-blue-100 transition-all shadow-sm hover:shadow">
               <span className="text-yellow-500">⚡</span>
-=======
-            <div className="flex items-center gap-2 bg-white rounded-lg py-2 px-3 border border-blue-100 text-[13px] text-blue-700 font-medium cursor-pointer hover:bg-blue-100 transition">
-              <span>⚡</span>
->>>>>>> bd54fbf00f6e77ae3425ebdd9b239ba3345dc53a
               Get 3X boost to your profile performance
             </div>
           </div>
         </div>
       </div>
-<<<<<<< HEAD
-=======
-
-      {/* (Optional): More sections here, e.g., categories, quick actions, etc. */}
->>>>>>> bd54fbf00f6e77ae3425ebdd9b239ba3345dc53a
     </aside>
   );
 };
 
-<<<<<<< HEAD
 export default Sidebar;
-=======
-export default Sidebar;
->>>>>>> bd54fbf00f6e77ae3425ebdd9b239ba3345dc53a

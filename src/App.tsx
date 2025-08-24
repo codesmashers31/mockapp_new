@@ -6,11 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Login from "./components/Login";
-<<<<<<< HEAD
 // import { LayoutDashboard } from "lucide-react";
-=======
-import { LayoutDashboard } from "lucide-react";
->>>>>>> bd54fbf00f6e77ae3425ebdd9b239ba3345dc53a
 import Register from "./components/Register";
 
 const queryClient = new QueryClient();

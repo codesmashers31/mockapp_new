@@ -1,10 +1,5 @@
-<<<<<<< HEAD
 import React, { useRef, useState } from "react";
 import { Briefcase, MapPin, Clock, Star, ChevronLeft, ChevronRight, BookOpen, Users, Zap, Award } from "lucide-react";
-=======
-import React, { useRef } from "react";
-import { Briefcase, MapPin, Clock } from "lucide-react";
->>>>>>> bd54fbf00f6e77ae3425ebdd9b239ba3345dc53a
 
 // ---- Helper for section backgrounds ----
 function getSectionBg(section) {
@@ -14,7 +9,6 @@ function getSectionBg(section) {
   return "bg-gray-50";
 }
 
-<<<<<<< HEAD
 // ---- Helper for category colors ----
 function getCategoryColor(section) {
   if (section === "IT") return "text-blue-700 bg-blue-100";
@@ -23,8 +17,6 @@ function getCategoryColor(section) {
   return "text-gray-700 bg-gray-100";
 }
 
-=======
->>>>>>> bd54fbf00f6e77ae3425ebdd9b239ba3345dc53a
 // ---- DATA ----
 const profiles = [
   {
@@ -37,11 +29,7 @@ const profiles = [
     type: "hr",
     category: "HR",
     company: "Mock-in",
-<<<<<<< HEAD
     logo: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&h=100&q=80",
-=======
-    logo: "media/avatars/300-16.png",
->>>>>>> bd54fbf00f6e77ae3425ebdd9b239ba3345dc53a
     postedAgo: "3 days ago",
     location: "Remote",
     officeLocation: "Bengaluru",
@@ -59,11 +47,7 @@ const profiles = [
     type: "mentor",
     category: "IT",
     company: "Mock-in",
-<<<<<<< HEAD
     logo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&h=100&q=80",
-=======
-    logo: "media/avatars/300-18.png",
->>>>>>> bd54fbf00f6e77ae3425ebdd9b239ba3345dc53a
     postedAgo: "5 days ago",
     location: "Remote",
     officeLocation: "Hyderabad",
@@ -81,11 +65,7 @@ const profiles = [
     type: "hr",
     category: "HR",
     company: "Mock-in",
-<<<<<<< HEAD
     logo: "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&h=100&q=80",
-=======
-    logo: "media/avatars/300-17.png",
->>>>>>> bd54fbf00f6e77ae3425ebdd9b239ba3345dc53a
     postedAgo: "2 days ago",
     location: "Remote",
     officeLocation: "Pune",
@@ -103,11 +83,7 @@ const profiles = [
     type: "business",
     category: "Business",
     company: "Mock-in",
-<<<<<<< HEAD
     logo: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&h=100&q=80",
-=======
-    logo: "media/avatars/300-20.png",
->>>>>>> bd54fbf00f6e77ae3425ebdd9b239ba3345dc53a
     postedAgo: "4 days ago",
     location: "Remote",
     officeLocation: "Mumbai",
@@ -125,11 +101,7 @@ const profiles = [
     type: "mentor",
     category: "IT",
     company: "Mock-in",
-<<<<<<< HEAD
     logo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&h=100&q=80",
-=======
-    logo: "media/avatars/300-21.png",
->>>>>>> bd54fbf00f6e77ae3425ebdd9b239ba3345dc53a
     postedAgo: "1 day ago",
     location: "Remote",
     officeLocation: "Delhi",
@@ -147,11 +119,7 @@ const profiles = [
     type: "business",
     category: "Business",
     company: "Mock-in",
-<<<<<<< HEAD
     logo: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&h=100&q=80",
-=======
-    logo: "media/avatars/300-22.png",
->>>>>>> bd54fbf00f6e77ae3425ebdd9b239ba3345dc53a
     postedAgo: "6 days ago",
     location: "Remote",
     officeLocation: "Chennai",
@@ -161,7 +129,6 @@ const profiles = [
   }
 ];
 
-<<<<<<< HEAD
 function getCards(category) {
   const filtered = profiles.filter((p) => p.category === category);
   
@@ -301,20 +268,11 @@ const CarouselSlider = ({ title, cards }) => {
       const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
       setShowLeftArrow(scrollLeft > 0);
       setShowRightArrow(scrollLeft < scrollWidth - clientWidth - 10);
-=======
-// ---- CarouselSlider: horizontal scroll arrows ----
-const CarouselSlider = ({ title, cards }) => {
-  const scrollRef = useRef(null);
-  const scrollBy = (offset) => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: offset, behavior: "smooth" });
->>>>>>> bd54fbf00f6e77ae3425ebdd9b239ba3345dc53a
     }
   };
 
   return (
     <>
-<<<<<<< HEAD
       <div className="flex items-center justify-between mb-5 px-1">
         <h2 className="font-bold text-2xl text-gray-800 tracking-tight flex items-center gap-2">
           <span className={`p-2 rounded-lg ${getCategoryColor(title.split(" ")[0])}`}>
@@ -343,46 +301,18 @@ const CarouselSlider = ({ title, cards }) => {
               <ChevronRight size={20} />
             </button>
           )}
-=======
-      <div className="flex items-center justify-between mb-3 px-1">
-        <h2 className="font-bold text-xl text-gray-800 tracking-tight">{title}</h2>
-        <div className="flex gap-2">
-          <button
-            onClick={() => scrollBy(-380)}
-            className="p-1.5 ml-2 rounded-full backdrop-blur bg-white/60 border border-blue-200 shadow text-blue-600 hover:scale-110 active:scale-90 transition"
-            aria-label="Scroll Left"
-          >
-            <svg className="w-5 h-5" viewBox="0 0 20 20"><path fill="none" stroke="currentColor" strokeWidth="2" d="M13 4l-6 6 6 6" /></svg>
-          </button>
-          <button
-            onClick={() => scrollBy(380)}
-            className="p-1.5 rounded-full backdrop-blur bg-white/60 border border-blue-200 shadow text-blue-600 hover:scale-110 active:scale-90 transition"
-            aria-label="Scroll Right"
-          >
-            <svg className="w-5 h-5" viewBox="0 0 20 20"><path fill="none" stroke="currentColor" strokeWidth="2" d="M7 4l6 6-6 6" /></svg>
-          </button>
->>>>>>> bd54fbf00f6e77ae3425ebdd9b239ba3345dc53a
         </div>
       </div>
       <div
         ref={scrollRef}
-<<<<<<< HEAD
         className="flex gap-5 overflow-x-auto pb-4 no-scrollbar"
         style={{ scrollSnapType: "x mandatory" }}
         onScroll={handleScroll}
-=======
-        className="flex gap-6 overflow-x-auto pb-2 no-scrollbar"
-        style={{ scrollSnapType: "x mandatory" }}
->>>>>>> bd54fbf00f6e77ae3425ebdd9b239ba3345dc53a
       >
         {cards.map((c, idx) => (
           <div
             key={idx}
-<<<<<<< HEAD
             className="flex-shrink-0 scroll-snap-align-start"
-=======
-            className="h-[230px] w-[340px] md:w-[370px] flex-shrink-0 scroll-snap-align-start"
->>>>>>> bd54fbf00f6e77ae3425ebdd9b239ba3345dc53a
           >
             {c}
           </div>
@@ -396,7 +326,6 @@ const CarouselSlider = ({ title, cards }) => {
   );
 };
 
-<<<<<<< HEAD
 // ---- HomePage ----
 export default function CarouselPage() {
   return (
@@ -426,70 +355,3 @@ export default function CarouselPage() {
     </div>
   );
 }
-=======
-// ---- getCards: card content with clamp, fixed sizing ----
-function getCards(category) {
-  const filtered = profiles.filter((p) => p.category === category);
-  return filtered.map((profile, idx) => (
-    <div
-      key={idx}
-      className="rounded-xl border border-gray-200 bg-white shadow flex flex-col justify-between h-full w-full px-5 py-4 transition-all duration-200 hover:shadow-lg"
-    >
-      <div>
-        <div className="flex items-start gap-3 mb-2">
-          <img src={profile.logo} alt={profile.company} className="w-14 h-14 rounded-lg border bg-white object-cover shrink-0" />
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 flex-wrap">
-              <span className="font-semibold text-base text-gray-900 truncate max-w-[100px]">{profile.name}</span>
-              <span className="text-xs bg-blue-100 text-blue-800 px-2 rounded-full font-semibold">{profile.experience}</span>
-              <span className="text-yellow-500 text-xs flex items-center gap-1 font-medium ml-1">★ {profile.rating}</span>
-              <span className="ml-1 text-xs text-gray-400">{profile.reviews}</span>
-            </div>
-            <div className="text-xs text-gray-600 truncate">{profile.role}</div>
-            <div className="flex flex-wrap items-center gap-2 mt-0.5 text-gray-600 text-xs">
-              <span className="flex items-center gap-1 line-clamp-1"><Briefcase className="w-4 h-4" />{profile.skills.join(", ")}</span>
-              <span className="flex items-center gap-1"><MapPin className="w-4 h-4" />{profile.location}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="flex items-end justify-between gap-2 pt-1">
-        <div className="flex flex-col gap-1">
-          <span className="text-xs text-gray-500"><MapPin className="inline w-4 h-4" /> {profile.officeLocation}</span>
-          <span className="text-xs text-gray-500"><Clock className="inline w-4 h-4" /> {profile.postedAgo}</span>
-        </div>
-        <div className="flex flex-col items-end min-w-[70px]">
-          <span className="font-semibold text-[15px] text-blue-700">{profile.price}</span>
-          <button className="mt-1.5 px-4 py-1 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs shadow transition">
-            Book Mock
-          </button>
-        </div>
-      </div>
-    </div>
-  ));
-}
-
-// ---- HomePage ----
-export default function CarouselPage() {
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-[#f8fafc] via-[#f4f6fa] to-[#f8fafc] px-2 py-7">
-      <div className="flex items-center space-x-4 mb-8">
-        <div className="h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent flex-1" />
-        <span className="text-sm md:text-base font-bold text-blue-700 bg-blue-50 px-4 py-2 rounded-full shadow">
-          Mock Interview Coaches
-        </span>
-        <div className="h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent flex-1" />
-      </div>
-      <div className={`rounded-2xl mb-12 px-2 py-6 md:px-8 shadow-inner ${getSectionBg("IT")}`}>
-        <CarouselSlider title="IT Mock Sessions" cards={getCards("IT")} />
-      </div>
-      <div className={`rounded-2xl mb-12 px-2 py-6 md:px-8 shadow-inner ${getSectionBg("HR")}`}>
-        <CarouselSlider title="HR Mock Sessions" cards={getCards("HR")} />
-      </div>
-      <div className={`rounded-2xl mb-12 px-2 py-6 md:px-8 shadow-inner ${getSectionBg("Business")}`}>
-        <CarouselSlider title="Business People Mock Sessions" cards={getCards("Business")} />
-      </div>
-    </div>
-  );
-}
->>>>>>> bd54fbf00f6e77ae3425ebdd9b239ba3345dc53a
