@@ -108,12 +108,7 @@ const Navigation = () => {
           <div className="flex items-center space-x-4 sm:space-x-8">
             {/* Logo */}
             <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-md">
-                <span className="text-primary-foreground font-bold text-sm sm:text-lg">M</span>
-              </div>
-              <span className="text-xl sm:text-2xl font-display font-bold text-primary bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-                MockHire
-              </span>
+             <img src="/media/logo/logonew.png" alt="" className="w-20 p-3" />
             </div>
             
             {/* Desktop Navigation */}

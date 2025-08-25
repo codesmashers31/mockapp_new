@@ -8,6 +8,7 @@ import NotFound from "./pages/NotFound";
 import Login from "./components/Login";
 // import { LayoutDashboard } from "lucide-react";
 import Register from "./components/Register";
+import BookSessionPage from "./components/BookSessionPage";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="*" element={<NotFound />} />
            <Route path="/signin" element={<Login />} />
           <Route path="/signup" element={<Register />} />
+           <Route path="/book-session/:coachName" element={<BookSessionPage />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>

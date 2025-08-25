@@ -1,6 +1,6 @@
-import React, { useRef, useState } from "react";
+import  { useRef, useState } from "react";
 import { Briefcase, MapPin, Clock, Star, ChevronLeft, ChevronRight, BookOpen, Users, Zap, Award } from "lucide-react";
-
+import { useNavigate } from 'react-router-dom';
 // ---- Helper for section backgrounds ----
 function getSectionBg(section) {
   if (section === "IT") return "bg-gradient-to-r from-blue-50 via-cyan-50 to-blue-100";
@@ -16,6 +16,10 @@ function getCategoryColor(section) {
   if (section === "Business") return "text-amber-700 bg-amber-100";
   return "text-gray-700 bg-gray-100";
 }
+
+
+
+
 
 // ---- DATA ----
 const profiles = [
@@ -158,6 +162,13 @@ function getCards(category) {
     // Select a random mock subject from the category
     const randomSubject = mockSubjects[category][Math.floor(Math.random() * mockSubjects[category].length)];
     
+    const navigate = useNavigate();
+    function handleBookClick(profile: { name: string; role: string; experience: string; skills: string[]; rating: number; price: string; type: string; category: string; company: string; logo: string; postedAgo: string; location: string; officeLocation: string; openings: number; applicants: number; reviews: number; }): void {
+      navigate(`/book-session/${profile.name.replace(/\s+/g, "-").toLowerCase()}`, {
+      state: { profile }
+      });
+    }
+
     return (
       <div
         key={idx}
@@ -231,8 +242,13 @@ function getCards(category) {
             </div>
           </div>
           <div className="flex flex-col items-end">
-            <span className="font-bold text-base text-blue-700">{profile.price}</span>
-            <button className="px-3 py-1.5 rounded-lg bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold text-xs shadow-md transition-all duration-200 hover:shadow-lg flex items-center gap-1">
+            <span className="font-bold text-base text-blue-700">
+              {profile.price}
+            </span>
+            <button
+              onClick={() => handleBookClick(profile)}
+              className="px-3 py-1.5 rounded-lg bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold text-xs shadow-md transition-all duration-200 hover:shadow-lg flex items-center gap-1"
+            >
               <BookOpen size={12} />
               Book Mock
             </button>
@@ -245,9 +261,18 @@ function getCards(category) {
 
 // CarouselSlider component
 const CarouselSlider = ({ title, cards }) => {
+
+  
   const scrollRef = useRef(null);
+  const navigate = useNavigate();
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(true);
+
+    function handleBookClick(profile: any) {
+    navigate(`/book-session/${profile.name.replace(/\s+/g, "-").toLowerCase()}`, {
+      state: { profile }
+    });
+  }
 
   const scrollBy = (offset) => {
     if (scrollRef.current) {

@@ -18,7 +18,7 @@ const SimpleHeroSection = () => {
   return (
     <section className="bg-gradient-to-r from-primary/10 via-accent/10 to-primary/5 border-b border-border">
       <div className="container mx-auto px-4 sm:px-8 py-7 flex flex-col items-center gap-2 relative">
-        <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-primary mb-1 text-center">
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-blue-800 mb-1 text-center">
           Book a Real Interview, Unlock Your Next Opportunity
         </h1>
         <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-xl text-center mb-3">
@@ -27,7 +27,7 @@ const SimpleHeroSection = () => {
         <div className="flex items-center gap-3">
           <a
             href="#book"
-            className="bg-blue-600 hover:bg-blue-700 px-5 py-2 rounded-full text-white font-semibold text-sm shadow transition"
+            className="bg-blue-800 hover:bg-white-700 px-5 py-2 rounded-full text-white font-semibold text-sm shadow transition"
           >
             Book My Interview
           </a>
