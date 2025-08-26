@@ -5,17 +5,32 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import registrationIllustration from "/media/illustrations/28.svg";
 
 export const RegisterForm = () => {
   const [step, setStep] = useState<"email" | "otp">("email");
   const [email, setEmail] = useState("");
+  const [userType, setUserType] = useState("");
   const [otp, setOtp] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [countdown, setCountdown] = useState(0);
 
   const handleEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validate user type selection
+    if (!userType) {
+      alert("Please select whether you're a Candidate or Expert");
+      return;
+    }
+    
     setIsLoading(true);
     
     // Simulate API call to send OTP
@@ -33,7 +48,7 @@ export const RegisterForm = () => {
     // Simulate OTP verification
     setTimeout(() => {
       setIsLoading(false);
-      console.log("Registration successful with:", { email });
+      console.log("Registration successful with:", { email, userType });
       // Here you would typically redirect user or show success message
     }, 1500);
   };
@@ -166,6 +181,22 @@ export const RegisterForm = () => {
                       <p className="text-xs text-muted-foreground">
                         We'll send a verification code to this email
                       </p>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="userType" className="text-xs sm:text-sm font-medium">
+                        I am a<span className="text-destructive">*</span>
+                      </Label>
+                      <Select onValueChange={setUserType} required>
+                        <SelectTrigger className="h-10 sm:h-12">
+                          <SelectValue placeholder="Select your role" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="candidate">Candidate</SelectItem>
+                          <SelectItem value="expert">Expert</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      
                     </div>
 
                     <Button 
