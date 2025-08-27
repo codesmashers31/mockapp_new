@@ -3,8 +3,11 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import axios from 'axios'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
 import {
   Select,
   SelectContent,
@@ -21,36 +24,77 @@ export const RegisterForm = () => {
   const [otp, setOtp] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [countdown, setCountdown] = useState(0);
+  const [error, setError] = useState("");
+
+  const navigate = useNavigate();
 
   const handleEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
     
     // Validate user type selection
     if (!userType) {
-      alert("Please select whether you're a Candidate or Expert");
+      setError("Please select whether you're a Candidate or Expert");
+      return;
+    }
+    
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError("Please enter a valid email address");
       return;
     }
     
     setIsLoading(true);
     
-    // Simulate API call to send OTP
-    setTimeout(() => {
+    try {
+      await sendOtp();
       setIsLoading(false);
       setStep("otp");
       startCountdown();
-    }, 1500);
+    } catch (err) {
+      setIsLoading(false);
+      setError("Failed to send OTP. Please try again.");
+    }
   };
 
   const handleOtpSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
     
-    // Simulate OTP verification
-    setTimeout(() => {
+    if (otp.length !== 6) {
+      setError("Please enter a valid 6-digit code");
+      return;
+    }
+    
+    setIsLoading(true);
+    setError("");
+    
+    try {
+      // Verify OTP with backend
+      const response = await axios.post('http://localhost:3000/api/auth/verify-otp', {
+        email,
+        otp
+      });
+      
       setIsLoading(false);
       console.log("Registration successful with:", { email, userType });
-      // Here you would typically redirect user or show success message
-    }, 1500);
+      navigate("/")
+    } catch (err: any) {
+      setIsLoading(false);
+      setError(err.response?.data?.message || "Invalid verification code");
+    }
+  };
+
+  const sendOtp = async () => {
+    try {
+      const response = await axios.post('http://localhost:3000/api/auth/send-otp', {
+        email,
+        userType // Include userType in the request if needed by backend
+      });
+      return response.data;
+    } catch (err: any) {
+      throw new Error(err.response?.data?.message || "Failed to send OTP");
+    }
   };
 
   const startCountdown = () => {
@@ -66,15 +110,20 @@ export const RegisterForm = () => {
     }, 1000);
   };
 
-  const resendOtp = () => {
+  const resendOtp = async () => {
     if (countdown > 0) return;
     
     setIsLoading(true);
-    // Simulate resend OTP
-    setTimeout(() => {
+    setError("");
+    
+    try {
+      await sendOtp();
       setIsLoading(false);
       startCountdown();
-    }, 1000);
+    } catch (err: any) {
+      setIsLoading(false);
+      setError(err.message || "Failed to resend OTP");
+    }
   };
 
   return (
@@ -163,6 +212,12 @@ export const RegisterForm = () => {
               </CardHeader>
 
               <CardContent className="space-y-6">
+                {error && (
+                  <div className="bg-destructive/15 text-destructive text-sm p-3 rounded-md">
+                    {error}
+                  </div>
+                )}
+                
                 {step === "email" ? (
                   <form onSubmit={handleEmailSubmit} className="space-y-4">
                     <div className="space-y-2">
@@ -196,7 +251,6 @@ export const RegisterForm = () => {
                           <SelectItem value="expert">Expert</SelectItem>
                         </SelectContent>
                       </Select>
-                      
                     </div>
 
                     <Button 
@@ -251,7 +305,10 @@ export const RegisterForm = () => {
                     <div className="text-center">
                       <button
                         type="button"
-                        onClick={() => setStep("email")}
+                        onClick={() => {
+                          setStep("email");
+                          setError("");
+                        }}
                         className="text-sm text-muted-foreground hover:text-foreground"
                       >
                         ← Change email address
