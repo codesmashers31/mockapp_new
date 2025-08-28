@@ -9,7 +9,6 @@ import Login from "./components/Login";
 // import { LayoutDashboard } from "lucide-react";
 import Register from "./components/Register";
 import BookSessionPage from "./components/BookSessionPage";
-
 const queryClient = new QueryClient();
 
 const App = () => (
