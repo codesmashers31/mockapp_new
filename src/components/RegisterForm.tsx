@@ -7,7 +7,7 @@ import axios from 'axios'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
+import { useAuth } from "@/context/AuthContext";
 import {
   Select,
   SelectContent,
@@ -18,15 +18,19 @@ import {
 import registrationIllustration from "/media/illustrations/28.svg";
 
 export const RegisterForm = () => {
-  const [step, setStep] = useState<"email" | "otp">("email");
+  const [step, setStep] = useState<"email" | "otp" | "details">("email");
   const [email, setEmail] = useState("");
   const [userType, setUserType] = useState("");
   const [otp, setOtp] = useState("");
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [countdown, setCountdown] = useState(0);
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
+  const { register } = useAuth();
 
   const handleEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -71,17 +75,47 @@ export const RegisterForm = () => {
     
     try {
       // Verify OTP with backend
-      const response = await axios.post('http://localhost:3000/api/auth/verify-otp', {
+      await axios.post('http://localhost:3000/api/auth/verify-otp', {
         email,
         otp
       });
       
       setIsLoading(false);
-      console.log("Registration successful with:", { email, userType });
-      navigate("/")
+      setStep("details");
     } catch (err: any) {
       setIsLoading(false);
       setError(err.response?.data?.message || "Invalid verification code");
+    }
+  };
+
+  const handleDetailsSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters long");
+      return;
+    }
+    
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+    
+    if (!name.trim()) {
+      setError("Please enter your name");
+      return;
+    }
+    
+    setIsLoading(true);
+    setError("");
+    
+    try {
+      await register(email, password, userType, name.trim());
+      setIsLoading(false);
+      navigate("/dashboard");
+    } catch (err: any) {
+      setIsLoading(false);
+      setError(err.message || "Registration failed");
     }
   };
 
@@ -89,7 +123,7 @@ export const RegisterForm = () => {
     try {
       const response = await axios.post('http://localhost:3000/api/auth/send-otp', {
         email,
-        userType // Include userType in the request if needed by backend
+        userType
       });
       return response.data;
     } catch (err: any) {
@@ -129,7 +163,7 @@ export const RegisterForm = () => {
   return (
     <div className="flex min-h-screen bg-background">
       <div className="flex flex-col-reverse lg:flex-row w-full">
-        {/* Left Side - Benefits/Illustration (unchanged) */}
+        {/* Left Side - Benefits/Illustration */}
         <aside className="lg:w-1/2 flex justify-center items-center bg-gradient-hero p-4 sm:p-8 md:p-12">
           <div className="w-full max-w-lg mx-auto space-y-8">
             <div>
@@ -190,7 +224,7 @@ export const RegisterForm = () => {
                 <p className="text-xs sm:text-sm text-muted-foreground">
                   Already Registered?{" "}
                   <Link
-                    to="/signin"
+                    to="/login"
                     className="text-primary hover:underline font-medium"
                   >
                     Login here
@@ -202,12 +236,15 @@ export const RegisterForm = () => {
             <Card className="shadow-lg border-none bg-white/95 rounded-xl">
               <CardHeader className="text-center pb-4">
                 <CardTitle className="text-xl sm:text-2xl font-bold">
-                  {step === "email" ? "Create your profile" : "Verify your email"}
+                  {step === "email" ? "Create your profile" : 
+                   step === "otp" ? "Verify your email" : "Complete your profile"}
                 </CardTitle>
                 <CardDescription className="text-sm sm:text-base">
                   {step === "email" 
                     ? "Join thousands of professionals finding their dream jobs" 
-                    : `Enter the verification code sent to ${email}`}
+                    : step === "otp"
+                    ? `Enter the verification code sent to ${email}`
+                    : "Add your personal details to complete registration"}
                 </CardDescription>
               </CardHeader>
 
@@ -262,7 +299,7 @@ export const RegisterForm = () => {
                       {isLoading ? "Sending code..." : "Send Verification Code"}
                     </Button>
                   </form>
-                ) : (
+                ) : step === "otp" ? (
                   <form onSubmit={handleOtpSubmit} className="space-y-4">
                     <div className="space-y-2">
                       <Label htmlFor="otp" className="text-xs sm:text-sm font-medium">
@@ -299,7 +336,7 @@ export const RegisterForm = () => {
                       variant="hero"
                       disabled={isLoading || otp.length !== 6}
                     >
-                      {isLoading ? "Verifying..." : "Verify & Create Account"}
+                      {isLoading ? "Verifying..." : "Verify Email"}
                     </Button>
 
                     <div className="text-center">
@@ -314,6 +351,65 @@ export const RegisterForm = () => {
                         ← Change email address
                       </button>
                     </div>
+                  </form>
+                ) : (
+                  <form onSubmit={handleDetailsSubmit} className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="name" className="text-xs sm:text-sm font-medium">
+                        Full Name<span className="text-destructive">*</span>
+                      </Label>
+                      <Input
+                        id="name"
+                        type="text"
+                        placeholder="Enter your full name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        className="h-10 sm:h-12"
+                        required
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="password" className="text-xs sm:text-sm font-medium">
+                        Password<span className="text-destructive">*</span>
+                      </Label>
+                      <Input
+                        id="password"
+                        type="password"
+                        placeholder="Create a password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        className="h-10 sm:h-12"
+                        required
+                      />
+                      <p className="text-xs text-muted-foreground">
+                        Must be at least 6 characters long
+                      </p>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="confirmPassword" className="text-xs sm:text-sm font-medium">
+                        Confirm Password<span className="text-destructive">*</span>
+                      </Label>
+                      <Input
+                        id="confirmPassword"
+                        type="password"
+                        placeholder="Confirm your password"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        className="h-10 sm:h-12"
+                        required
+                      />
+                    </div>
+
+                    <Button 
+                      type="submit" 
+                      className="w-full h-10 sm:h-12 text-base font-medium" 
+                      variant="hero"
+                      disabled={isLoading}
+                    >
+                      {isLoading ? "Creating account..." : "Create Account"}
+                    </Button>
                   </form>
                 )}
 
