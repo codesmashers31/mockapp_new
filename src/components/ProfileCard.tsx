@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import { Briefcase, MapPin, Clock, Users, Star, BookOpen } from 'lucide-react';
+import { Briefcase, MapPin, Clock, Users, Star, BookOpen, ChevronRight, Eye, Bookmark, Share2, Filter, Search, Zap, Award, TrendingUp } from 'lucide-react';
 
 const CoachSessionCard = () => {
-  // Sample data for profile cards
+  const [activeFilter, setActiveFilter] = useState('all');
+  
   const profiles = [
     {
+      id: 1,
       name: "Sarah Johnson",
       role: "Senior HR Manager",
       experience: "8+ years",
@@ -18,13 +20,17 @@ const CoachSessionCard = () => {
       postedAgo: "3 days ago",
       salary: "Not Disclosed",
       location: "Remote",
-      officeLocation: "Hyderabad"
+      officeLocation: "Hyderabad",
+      responseTime: "2 hours",
+      successRate: "95%",
+      sessionsCompleted: 150
     },
     {
+      id: 2,
       name: "Rajesh Kumar",
       role: "Full Stack Developer",
       experience: "6+ years",
-      skills: ["React", "Node.js", "System Design"],
+      skills: ["React", "Node.js", "System Design", "AWS"],
       rating: 4.9,
       price: "₹399/session",
       type: "mentor",
@@ -34,13 +40,17 @@ const CoachSessionCard = () => {
       postedAgo: "1 day ago",
       salary: "Competitive",
       location: "Hybrid",
-      officeLocation: "Bangalore"
+      officeLocation: "Bangalore",
+      responseTime: "1 hour",
+      successRate: "98%",
+      sessionsCompleted: 230
     },
     {
+      id: 3,
       name: "Priya Sharma",
       role: "Tech Recruiter",
       experience: "5+ years",
-      skills: ["Frontend", "Backend", "DevOps"],
+      skills: ["Frontend", "Backend", "DevOps", "Interview Prep"],
       rating: 4.7,
       price: "₹249/session",
       type: "hr",
@@ -50,165 +60,247 @@ const CoachSessionCard = () => {
       postedAgo: "5 days ago",
       salary: "Industry Standard",
       location: "Remote",
-      officeLocation: "Chennai"
+      officeLocation: "Chennai",
+      responseTime: "4 hours",
+      successRate: "92%",
+      sessionsCompleted: 180
     }
   ];
 
+  const filters = [
+    { id: 'all', label: 'All Coaches', count: 12 },
+    { id: 'hr', label: 'HR Experts', count: 5 },
+    { id: 'mentor', label: 'Tech Mentors', count: 7 },
+    { id: 'available', label: 'Available Now', count: 8 }
+  ];
+
   return (
-    <div className="min-h-screen bg-gray-50 p-4 md:p-6">
-      <div className="max-w-6xl mx-auto">
-        {/* Profile Header */}
-        <div className="bg-white rounded-xl shadow-sm p-6 mb-6">
-          <div className="flex items-start justify-between">
-            <div className="flex items-start space-x-4">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center">
-                <span className="text-xl font-bold text-blue-600">BS</span>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50/30 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header Section */}
+        <div className="mb-8">
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-8">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">Find Your Perfect Coach</h1>
+              <p className="text-lg text-gray-600 max-w-2xl">
+                Connect with industry experts for personalized mock interviews and career guidance
+              </p>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <input
+                  type="text"
+                  placeholder="Search coaches..."
+                  className="pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent w-64"
+                />
               </div>
-              <div>
-                <h1 className="text-2xl font-bold text-gray-800">Balamugunthan Shakhti</h1>
-                <p className="text-gray-600">US IT Recruiter @ Two95 International Staffing Se...</p>
-                <p className="text-sm text-gray-500 mt-1">Last updated today</p>
+              <button className="flex items-center gap-2 px-4 py-3 border border-gray-300 rounded-xl hover:bg-white transition-colors">
+                <Filter className="w-4 h-4" />
+                <span className="font-medium">Filters</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Stats Overview */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-gray-600">Active Coaches</p>
+                  <p className="text-2xl font-bold text-gray-900 mt-1">150+</p>
+                </div>
+                <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                  <Users className="w-6 h-6 text-blue-600" />
+                </div>
               </div>
             </div>
-            <button className="text-blue-600 font-semibold hover:text-blue-800">Edit Profile</button>
+            
+            <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-gray-600">Success Rate</p>
+                  <p className="text-2xl font-bold text-gray-900 mt-1">95%</p>
+                </div>
+                <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                  <TrendingUp className="w-6 h-6 text-green-600" />
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-gray-600">Avg. Rating</p>
+                  <p className="text-2xl font-bold text-gray-900 mt-1">4.8/5</p>
+                </div>
+                <div className="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center">
+                  <Star className="w-6 h-6 text-yellow-600" fill="currentColor" />
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-gray-600">Response Time</p>
+                  <p className="text-2xl font-bold text-gray-900 mt-1">2h</p>
+                </div>
+                <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
+                  <Clock className="w-6 h-6 text-purple-600" />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Main Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Left Column */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* Complete Profile Section */}
-            <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="font-semibold text-lg mb-4">Complete profile</h2>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                <div>
-                  <h3 className="font-medium text-gray-700 mb-2">Profile performance</h3>
-                  <ul className="space-y-2 text-sm text-gray-600">
-                    <li className="flex justify-between">
-                      <span>Search appearances</span>
-                      <span className="font-semibold">24</span>
-                    </li>
-                    <li className="flex justify-between">
-                      <span>Recruiter actions</span>
-                      <span className="font-semibold">8</span>
-                    </li>
-                  </ul>
-                  <button className="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md font-semibold text-sm">
-                    Get 3X boost to your profile performance
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          {/* Main Content - Centered */}
+          <div className="lg:col-span-8 space-y-6">
+            {/* Filters */}
+            <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+              <div className="flex flex-wrap gap-2">
+                {filters.map((filter) => (
+                  <button
+                    key={filter.id}
+                    onClick={() => setActiveFilter(filter.id)}
+                    className={`px-4 py-2 rounded-lg font-medium text-sm transition-all ${
+                      activeFilter === filter.id
+                        ? 'bg-blue-600 text-white shadow-md'
+                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    }`}
+                  >
+                    {filter.label}
+                    <span className="ml-2 text-xs opacity-80">({filter.count})</span>
                   </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Featured Banner */}
+            <div className="bg-gradient-to-r from-blue-600 to-purple-700 rounded-2xl p-6 text-white">
+              <div className="flex flex-col md:flex-row items-center justify-between">
+                <div className="mb-4 md:mb-0">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Zap className="w-5 h-5 text-yellow-300" fill="currentColor" />
+                    <span className="font-semibold">FEATURED</span>
+                  </div>
+                  <h3 className="text-xl font-bold mb-2">Premium Coaching Sessions</h3>
+                  <p className="text-blue-100">Get 20% off your first session with verified experts</p>
                 </div>
-                
-                <div className="bg-blue-50 p-4 rounded-lg">
-                  <h3 className="font-semibold text-blue-800 mb-2">Introducing Naukri 360 Pro!</h3>
-                  <p className="text-sm text-blue-700">
-                    Get AI-enhanced profile, hidden jobs, pro resume templates, and more
-                  </p>
-                </div>
+                <button className="px-6 py-3 bg-white text-blue-600 font-semibold rounded-xl hover:bg-blue-50 transition-colors shadow-lg">
+                  Claim Offer
+                </button>
               </div>
             </div>
 
-            {/* Quick Stats */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-              <div className="bg-white p-4 rounded-xl border border-gray-200 text-center shadow-sm transition hover:shadow-md">
-                <div className="text-xl md:text-2xl font-bold text-blue-600">150+</div>
-                <div className="text-xs text-gray-600 font-medium">Active HRs</div>
-              </div>
-              <div className="bg-white p-4 rounded-xl border border-gray-200 text-center shadow-sm transition hover:shadow-md">
-                <div className="text-xl md:text-2xl font-bold text-green-600">200+</div>
-                <div className="text-xs text-gray-600 font-medium">Mentors</div>
-              </div>
-              <div className="bg-white p-4 rounded-xl border border-gray-200 text-center shadow-sm transition hover:shadow-md col-span-2 sm:col-span-1">
-                <div className="text-xl md:text-2xl font-bold text-purple-600">95%</div>
-                <div className="text-xs text-gray-600 font-medium">Success Rate</div>
-              </div>
-            </div>
-
-            {/* Divider */}
-            <div className="flex items-center space-x-4 my-5">
-              <div className="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent flex-1" />
-              <span className="text-xs md:text-sm font-bold text-gray-600 bg-gray-50 px-3">
-                Available Coaches
-              </span>
-              <div className="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent flex-1" />
-            </div>
-
-            {/* Profile Cards */}
-            <div className="space-y-6">
-              {profiles.map((profile, index) => (
-                <div key={index} className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
-                  <div className="flex justify-between items-start">
-                    <div className="flex items-start space-x-4">
-                      <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                        <span className="text-lg font-bold text-blue-600">{profile.name.charAt(0)}</span>
-                      </div>
+            {/* Profile Cards Grid */}
+            <div className="grid grid-cols-1 gap-6">
+              {profiles.map((profile) => (
+                <div key={profile.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow">
+                  <div className="p-6">
+                    <div className="flex flex-col lg:flex-row gap-6">
+                      {/* Left Section - Profile Info */}
                       <div className="flex-1">
-                        <h3 className="font-bold text-gray-800">{profile.name}</h3>
-                        <p className="text-sm text-gray-600">{profile.role}</p>
-                        <div className="flex items-center mt-1">
-                          <span className="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full">
-                            {profile.experience}
-                          </span>
-                          <div className="flex items-center ml-3">
-                            {[...Array(5)].map((_, i) => (
-                              <Star
-                                key={i}
-                                size={14}
-                                className={`${i < Math.floor(profile.rating) ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'}`}
-                              />
-                            ))}
-                            <span className="text-xs text-gray-600 ml-1">{profile.rating}</span>
-                          </div>
-                        </div>
-                        <div className="flex flex-wrap gap-1 mt-2">
-                          {profile.skills.map((skill, i) => (
-                            <span key={i} className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">
-                              {skill}
-                            </span>
-                          ))}
-                        </div>
-                        
-                        {/* Job details section */}
-                        <div className="mt-4 pt-4 border-t border-gray-100">
-                          <div className="flex items-center gap-2 mb-2">
-                            <span className="text-primary font-semibold text-sm">{profile.company}</span>
-                            <span className="text-yellow-500 text-xs font-bold flex items-center gap-1">
-                              ★ {profile.rating}
-                            </span>
-                            <span className="text-xs text-gray-500"> {profile.reviews} Reviews</span>
+                        <div className="flex items-start gap-4">
+                          <div className="relative">
+                            <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                              {profile.name.charAt(0)}
+                            </div>
+                            <div className="absolute -bottom-1 -right-1 bg-green-500 border-2 border-white w-4 h-4 rounded-full"></div>
                           </div>
                           
-                          <div className="flex flex-wrap items-center gap-4 text-xs text-gray-600 mt-2">
-                            <span className="flex items-center gap-1"><Briefcase size={14} /> {profile.experience}</span>
-                            <span className="flex items-center gap-1">₹ {profile.salary}</span>
-                            <span className="flex items-center gap-1"><MapPin size={14} /> {profile.location}</span>
-                          </div>
-                          
-                          <div className="flex items-center gap-2 text-gray-500 text-xs mt-2">
-                            <span>Hiring office located in</span>
-                            <span className="font-medium">{profile.officeLocation}</span>
-                          </div>
-                          
-                          <div className="flex flex-wrap items-center justify-between gap-4 mt-4">
-                            <div className="flex items-center gap-4 text-xs text-gray-500">
-                              <span><Clock size={14} className="inline-block" /> <b className="text-gray-700">{profile.postedAgo}</b></span>
-                              <span>Openings: <b className="text-gray-700">20</b></span>
-                              <span>Applicants: <b className="text-gray-700">100+</b></span>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex flex-wrap items-center gap-3 mb-2">
+                              <h3 className="text-xl font-bold text-gray-900 truncate">{profile.name}</h3>
+                              <div className="flex items-center gap-1 bg-yellow-50 px-2 py-1 rounded-lg">
+                                <Star className="w-4 h-4 text-yellow-500" fill="currentColor" />
+                                <span className="text-sm font-semibold text-gray-900">{profile.rating}</span>
+                                <span className="text-sm text-gray-600">({profile.reviews})</span>
+                              </div>
+                            </div>
+                            
+                            <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600 mb-3">
+                              <span className="font-medium text-gray-900">{profile.role}</span>
+                              <span className="flex items-center gap-1">
+                                <Briefcase className="w-4 h-4" />
+                                {profile.experience}
+                              </span>
+                              <span className="flex items-center gap-1">
+                                <MapPin className="w-4 h-4" />
+                                {profile.location}
+                              </span>
+                            </div>
+
+                            {/* Company Badge */}
+                            <div className="flex items-center gap-2 mb-4">
+                              <div className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
+                                {profile.company}
+                              </div>
+                              <div className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium">
+                                {profile.successRate} Success Rate
+                              </div>
+                            </div>
+
+                            {/* Skills */}
+                            <div className="flex flex-wrap gap-2">
+                              {profile.skills.map((skill, index) => (
+                                <span
+                                  key={index}
+                                  className="px-3 py-1 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors"
+                                >
+                                  {skill}
+                                </span>
+                              ))}
                             </div>
                           </div>
                         </div>
                       </div>
+
+                      {/* Right Section - Actions & Stats */}
+                      <div className="lg:w-64 flex flex-col justify-between">
+                        <div className="space-y-3">
+                          <div className="text-right">
+                            <div className="text-2xl font-bold text-gray-900">{profile.price}</div>
+                            <div className="text-sm text-gray-500">per session</div>
+                          </div>
+                          
+                          <div className="grid grid-cols-2 gap-2 text-xs text-gray-600">
+                            <div className="text-center p-2 bg-gray-50 rounded-lg">
+                              <Clock className="w-3 h-3 mx-auto mb-1" />
+                              <div>{profile.responseTime}</div>
+                            </div>
+                            <div className="text-center p-2 bg-gray-50 rounded-lg">
+                              <Users className="w-3 h-3 mx-auto mb-1" />
+                              <div>{profile.sessionsCompleted}+</div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="flex gap-2 mt-4">
+                          <button className="flex-1 flex items-center justify-center gap-2 px-4 py-3 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors font-medium">
+                            <Bookmark className="w-4 h-4" />
+                            Save
+                          </button>
+                          <button className="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-xl font-semibold transition-all shadow-md hover:shadow-lg">
+                            Book Session
+                          </button>
+                        </div>
+                      </div>
                     </div>
-                    <div className="text-right flex flex-col items-end">
-                      <div className="font-bold text-gray-800">{profile.price}</div>
-                      <div className="flex gap-2 mt-4">
-                        <button className="px-4 py-1 border border-blue-600 text-blue-600 rounded-full text-sm font-medium transition hover:bg-blue-50">
-                          Save
-                        </button>
-                        <button className="px-4 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-sm font-medium transition">
-                          {profile.type === 'hr' ? 'Book Session' : 'Connect'}
-                        </button>
+                  </div>
+                  
+                  {/* Footer Stats */}
+                  <div className="bg-gray-50 px-6 py-4 border-t border-gray-200">
+                    <div className="flex flex-wrap items-center justify-between gap-4 text-sm text-gray-600">
+                      <div className="flex items-center gap-4">
+                        <span>Posted {profile.postedAgo}</span>
+                        <span>•</span>
+                        <span>Office: {profile.officeLocation}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Eye className="w-4 h-4" />
+                        <span>150+ views today</span>
                       </div>
                     </div>
                   </div>
@@ -216,117 +308,75 @@ const CoachSessionCard = () => {
               ))}
             </div>
 
-            {/* Ad Banner */}
-            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-xl border border-blue-200">
-              <h3 className="font-semibold text-lg text-blue-800 mb-2">75 Early access roles from top companies</h3>
-              <p className="text-sm text-blue-700 mb-4">
-                See what recruiters are searching for, even before they post a job
-              </p>
-              <button className="text-blue-600 font-semibold text-sm hover:text-blue-800">View all</button>
+            {/* Load More */}
+            <div className="text-center">
+              <button className="px-8 py-3 border border-gray-300 rounded-xl hover:bg-white transition-colors font-medium text-gray-700">
+                Load More Coaches
+              </button>
             </div>
           </div>
 
-          {/* Right Column */}
-          <div className="space-y-6">
-            {/* Profile Strength */}
-            <div className="bg-white p-6 rounded-xl shadow-sm">
-              <h2 className="font-semibold text-lg mb-4">Profile Strength</h2>
-              <div className="w-full bg-gray-200 rounded-full h-2 mb-4">
-                <div className="bg-blue-600 h-2 rounded-full" style={{ width: '65%' }}></div>
-              </div>
-              <p className="text-sm text-gray-600 mb-6">65% Complete</p>
-              
-              <div className="space-y-4">
+          {/* Sidebar */}
+          <div className="lg:col-span-4 space-y-6">
+            {/* Quick Actions */}
+            <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+              <h3 className="font-semibold text-lg mb-4">Quick Actions</h3>
+              <div className="space-y-3">
                 {[
-                  { label: 'Personal Details', completed: true },
-                  { label: 'Education', completed: true },
-                  { label: 'Work Experience', completed: false },
-                  { label: 'Skills', completed: false }
-                ].map((item, index) => (
-                  <div key={index} className="flex items-center space-x-2">
-                    <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
-                      item.completed ? 'bg-green-100' : 'bg-orange-100'
-                    }`}>
-                      {item.completed ? (
-                        <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                        </svg>
-                      ) : (
-                        <svg className="w-4 h-4 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                        </svg>
-                      )}
-                    </div>
-                    <span className="text-sm">{item.label}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Recommended Jobs */}
-            <div className="bg-white p-6 rounded-xl shadow-sm">
-              <h2 className="font-semibold text-lg mb-4">Recommended jobs for you</h2>
-              
-              <div className="flex border-b border-gray-200 mb-4">
-                <button className="px-3 py-2 text-sm font-medium text-blue-600 border-b-2 border-blue-600">
-                  Profile (71)
-                </button>
-                <button className="px-3 py-2 text-sm font-medium text-gray-600">
-                  You might like (65)
-                </button>
-                <button className="px-3 py-2 text-sm font-medium text-gray-600">
-                  Preferences (0)
-                </button>
-              </div>
-              
-              <div className="space-y-4">
-                {[
-                  { title: 'Hiring - Work from Home', company: 'Cognizant', rating: 3.7, location: 'Remote' },
-                  { title: 'Technical Recruiter', company: 'randstad offshore', location: 'Hybrid - Hyderabad' },
-                  { title: 'Customer Support', company: 'Trigent', location: 'Bengaluru' }
-                ].map((job, index) => (
-                  <div key={index} className="p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
-                    <h3 className="font-medium text-gray-800">{job.title}</h3>
-                    <div className="flex items-center justify-between mt-1">
-                      <span className="text-sm text-gray-600">{job.company}</span>
-                      {job.rating && (
-                        <span className="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded-full">+ {job.rating}</span>
-                      )}
-                    </div>
-                    <p className="text-xs text-gray-500 mt-2">{job.location}</p>
-                  </div>
-                ))}
-              </div>
-              
-              <button className="text-blue-600 font-semibold text-sm mt-4 hover:text-blue-800">View all</button>
-            </div>
-
-            {/* Needs Attention */}
-            <div className="bg-white p-6 rounded-xl shadow-sm">
-              <h2 className="font-semibold text-lg mb-4">Needs attention</h2>
-              <p className="text-gray-600 text-sm mb-4">Where are you in your job search journey?</p>
-              
-              <div className="grid grid-cols-2 gap-2">
-                {[
-                  'Actively searching jobs',
-                  'Preparing for interviews',
-                  'Appearing for interviews',
-                  'Received a job offer',
-                  'Casually exploring jobs',
-                  'Not looking for jobs'
-                ].map((status) => (
-                  <div 
-                    key={status}
-                    className={`p-2 rounded-md border text-center cursor-pointer text-xs ${
-                      status === 'Actively searching jobs' 
-                        ? 'border-blue-600 bg-blue-50 text-blue-800' 
-                        : 'border-gray-200 text-gray-600 hover:border-blue-300'
-                    }`}
+                  { icon: BookOpen, label: 'Schedule Session', color: 'blue' },
+                  { icon: Users, label: 'Find HR Experts', color: 'green' },
+                  { icon: Award, label: 'View Top Rated', color: 'purple' },
+                  { icon: TrendingUp, label: 'Career Guidance', color: 'orange' }
+                ].map((action, index) => (
+                  <button
+                    key={index}
+                    className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-gray-50 transition-colors text-left"
                   >
-                    {status}
+                    <div className={`w-10 h-10 bg-${action.color}-100 rounded-lg flex items-center justify-center`}>
+                      <action.icon className={`w-5 h-5 text-${action.color}-600`} />
+                    </div>
+                    <span className="font-medium text-gray-700">{action.label}</span>
+                    <ChevronRight className="w-4 h-4 text-gray-400 ml-auto" />
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Success Stories */}
+            <div className="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-2xl p-6 border border-blue-200">
+              <h3 className="font-semibold text-lg mb-4 text-gray-900">Success Stories</h3>
+              <div className="space-y-4">
+                {[
+                  { name: 'Alex Chen', role: 'Placed at Google', story: 'Got 3 offers after mock sessions' },
+                  { name: 'Priya Nair', role: 'Amazon Hire', story: 'Improved interview skills by 80%' },
+                  { name: 'Rohit Kumar', role: 'Microsoft', story: 'Cracked system design rounds' }
+                ].map((story, index) => (
+                  <div key={index} className="bg-white/80 rounded-xl p-4 backdrop-blur-sm">
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-bold">
+                        {story.name.charAt(0)}
+                      </div>
+                      <div>
+                        <div className="font-medium text-gray-900">{story.name}</div>
+                        <div className="text-sm text-blue-600 font-medium">{story.role}</div>
+                      </div>
+                    </div>
+                    <p className="text-sm text-gray-600">{story.story}</p>
                   </div>
                 ))}
               </div>
+            </div>
+
+            {/* Premium Offer */}
+            <div className="bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl p-6 text-white text-center">
+              <Award className="w-12 h-12 mx-auto mb-3" />
+              <h3 className="font-bold text-lg mb-2">Go Premium</h3>
+              <p className="text-purple-100 text-sm mb-4">
+                Unlimited sessions, priority booking, and exclusive resources
+              </p>
+              <button className="w-full bg-white text-purple-600 py-3 rounded-xl font-bold hover:bg-gray-100 transition-colors">
+                Upgrade Now
+              </button>
             </div>
           </div>
         </div>

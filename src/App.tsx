@@ -3,14 +3,14 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import BookSessionPage from "./components/BookSessionPage";
-import Dashboard from "./components/Dashboard";
+import Index from "./pages/Index";   // ✅ use Index as the real Dashboard
 import { ProtectedRoute } from "./routes/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
+import MySessions from "./components/MySessions";
 
 const queryClient = new QueryClient();
 
@@ -22,22 +22,41 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Index />} />
+            {/* 👇 Redirect root to signin */}
+            <Route path="/" element={<Navigate to="/signin" replace />} />
+
+            {/* Public routes */}
             <Route path="/signin" element={<Login />} />
             <Route path="/signup" element={<Register />} />
-            <Route path="/book-session/:coachName" element={<BookSessionPage />} />
-            
-            {/* Protected Routes */}
+
+            {/* Protected routes */}
+            <Route 
+              path="/book-session/:coachName" 
+              element={
+                <ProtectedRoute>
+                  <BookSessionPage />
+                </ProtectedRoute>
+              } 
+            />
+
             <Route 
               path="/dashboard" 
               element={
                 <ProtectedRoute>
-                  <Dashboard />
+                  <Index />   {/* ✅ now this is your dashboard */}
                 </ProtectedRoute>
               } 
             />
-            
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route
+  path="/my-sessions"
+  element={
+    <ProtectedRoute>
+      <MySessions />
+    </ProtectedRoute>
+  }
+/>
+
+            {/* Catch-all */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

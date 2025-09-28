@@ -87,9 +87,9 @@ const Navigation = () => {
   };
 
   const navItems = [
-    { name: "Find HRs", href: "#find-hrs", icon: <Users size={16} /> },
-    { name: "Find Mentors", href: "#find-mentors", icon: <GraduationCap size={16} /> },
-    { name: "My Sessions", href: "#my-sessions", icon: <Calendar size={16} /> },
+    { name: "Find HRs", href: "dashboard", icon: <Users size={16} /> },
+    { name: "Find Mentors", href: "find-mentors", icon: <GraduationCap size={16} /> },
+    { name: "My Sessions", href: "../my-sessions", icon: <Calendar size={16} /> },
   ];
 
   const profileMenuItems = [

@@ -28,14 +28,15 @@ export const LoginForm = () => {
     
     setIsLoading(true);
     
-    try {
-      await login(email, password);
-      navigate("/");
-    } catch (err: any) {
-      setError(err.message || "Login failed");
-    } finally {
-      setIsLoading(false);
-    }
+   try {
+  await login(email, password);
+  navigate("/dashboard");  // ✅ go to dashboard after login
+} catch (err: any) {
+  setError(err.message || "Login failed");
+} finally {
+  setIsLoading(false);
+}
+
   };
 
   return (
@@ -102,7 +103,7 @@ export const LoginForm = () => {
                 <p className="text-xs sm:text-sm text-muted-foreground">
                   New to CareerConnect?{" "}
                   <Link
-                    to="/register"
+                    to="/signup"
                     className="text-primary hover:underline font-medium"
                   >
                     Create account
